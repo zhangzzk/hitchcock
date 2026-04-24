@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hitchcock"
+version = "0.1.0"
+description = "Agent pipeline that turns a book/script into a consistent AI-generated animated video."
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+  "openai>=1.0,<2",
+  "pydantic>=2.11,<3",
+  "python-dotenv>=0.19",
+]
+
+[project.scripts]
+hitchcock = "hitchcock.cli:main"
+hitchcock-design = "hitchcock.cli:design_main"
+hitchcock-location = "hitchcock.cli:location_main"
+hitchcock-produce = "hitchcock.cli:produce_main"
+
+[tool.setuptools.package-dir]
+"" = "src"
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -1,0 +1,24 @@
+.env
+.env.local
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+build/
+dist/
+
+# Generated story bible (contains binary refs, keep out of git)
+bible/
+workspace/
+logs/
+tmp/
+
+# Local tool settings
+.claude/
+.vscode/
+.idea/
