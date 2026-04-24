@@ -14,7 +14,7 @@ Hitchcock is a **fully CLI-based, agent-friendly** multi-stage pipeline that dra
 [![Image: Nano Banana Pro](https://img.shields.io/badge/image-Nano%20Banana%20Pro-4285f4?style=flat-square)](https://deepmind.google/technologies/gemini/)
 [![LLM: Xiaomi MiMo](https://img.shields.io/badge/LLM-Xiaomi%20MiMo-ff6700?style=flat-square)](#)
 
-[Contract spec (AGENTS.md)](./AGENTS.md)
+**English** · [中文](./README.zh-CN.md) · [Contract spec (AGENTS.md)](./AGENTS.md)
 
 </div>
 
