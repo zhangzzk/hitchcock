@@ -36,7 +36,7 @@ Hitchcock is a **fully CLI-based, agent-friendly** multi-stage pipeline that dra
 
 You bring a block of text — a book chapter, a screenplay fragment, a scene description. Hitchcock turns it into:
 
-> **A 60–180s animated short** (Or longer as you wish), stylistically consistent, scene-by-scene faithful to the source, with diegetic voice lines and zero hand-editing of intermediate artifacts.
+> **A finished animated short — runtime is yours to set**, from a 60-second teaser to a multi-minute episode (no hard upper bound). Stylistically consistent, scene-by-scene faithful to the source, with diegetic voice lines and zero hand-editing of intermediate artifacts.
 
 Every stage is **gate-based**: `generate` → `show` → `refine --feedback "..."` → `approve`. Python code holds meta-prompts, schemas, and plumbing only. Every story-specific artifact — scene titles, camera choices, dialogue, scene-art prompts, Seedance prompts — is MIMO-authored and editable only through natural-language feedback.
 
@@ -84,7 +84,7 @@ hitchcock location path/to/location.txt
 
 # Gate-based story pipeline
 hitchcock init          -s my-arc --source path/to/source.txt
-hitchcock brief answer  -s my-arc --intent "faithful to the original, painterly Arcane style, 3-minute short"
+hitchcock brief answer  -s my-arc --intent "faithful to the original, painterly Arcane style, ~3-minute short (or however long the source supports)"
 hitchcock brief research -s my-arc && hitchcock brief approve -s my-arc
 hitchcock style  generate -s my-arc && hitchcock style  approve -s my-arc
 hitchcock cast   discover -s my-arc && hitchcock cast   build   -s my-arc && hitchcock cast approve -s my-arc
