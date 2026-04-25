@@ -11,7 +11,7 @@ Hitchcock is a **fully CLI-based, agent-friendly** multi-stage pipeline that dra
 ![CLI-first](https://img.shields.io/badge/interface-CLI--first-000000?style=flat-square&logo=gnubash&logoColor=white)
 ![Agent-friendly](https://img.shields.io/badge/agent--friendly-JSON%20I%2FO-6e5494?style=flat-square)
 [![Video: Seedance 2.0](https://img.shields.io/badge/video-Seedance%202.0-e63946?style=flat-square)](https://www.volcengine.com/product/seedance)
-[![Image: Nano Banana Pro](https://img.shields.io/badge/image-Nano%20Banana%20Pro-4285f4?style=flat-square)](https://deepmind.google/technologies/gemini/)
+[![Image: gpt-image-2](https://img.shields.io/badge/image-gpt--image--2-10a37f?style=flat-square)](https://platform.openai.com/docs/guides/images)
 [![LLM: Xiaomi MiMo](https://img.shields.io/badge/LLM-Xiaomi%20MiMo-ff6700?style=flat-square)](#)
 
 **English** · [中文](./README.zh-CN.md) · [Contract spec (AGENTS.md)](./AGENTS.md)
@@ -36,7 +36,7 @@ Hitchcock is a **fully CLI-based, agent-friendly** multi-stage pipeline that dra
 
 You bring a block of text — a book chapter, a screenplay fragment, a scene description. Hitchcock turns it into:
 
-> **A 60–180s animated short**, stylistically consistent, scene-by-scene faithful to the source, with diegetic voice lines and zero hand-editing of intermediate artifacts.
+> **A 60–180s animated short** (Or longer as you wish), stylistically consistent, scene-by-scene faithful to the source, with diegetic voice lines and zero hand-editing of intermediate artifacts.
 
 Every stage is **gate-based**: `generate` → `show` → `refine --feedback "..."` → `approve`. Python code holds meta-prompts, schemas, and plumbing only. Every story-specific artifact — scene titles, camera choices, dialogue, scene-art prompts, Seedance prompts — is MIMO-authored and editable only through natural-language feedback.
 
@@ -90,8 +90,9 @@ hitchcock style  generate -s my-arc && hitchcock style  approve -s my-arc
 hitchcock cast   discover -s my-arc && hitchcock cast   build   -s my-arc && hitchcock cast approve -s my-arc
 hitchcock script generate -s my-arc && hitchcock script approve -s my-arc
 hitchcock storyboard generate -s my-arc && hitchcock storyboard approve -s my-arc
-hitchcock art    generate -s my-arc --candidates 2
-hitchcock art    pick     -s my-arc --scene s01 --shot sh01 --candidate 2
+hitchcock art    generate -s my-arc                   # 1 candidate per shot (default)
+# add `--candidates 2-3` only when a shot needs variety to pick from
+hitchcock art    pick     -s my-arc --scene s01 --shot sh01 --candidate 1
 hitchcock art    approve  -s my-arc
 
 # Render via Seedance 2.0 (Volcengine Ark)
@@ -130,8 +131,8 @@ Full CLI contract, data model on disk, error codes, and known-issues log: see **
 |---|---|
 | LLM (every `refine` call) | **Xiaomi MiMo** — OpenAI-compatible |
 | Canon research | **Gemini 2.5 Flash** with Google Search grounding |
-| T2I — primary | **Nano Banana Pro** (Gemini 2.5 Flash Image) |
-| T2I — fallback | gpt-image-2 · Doubao Seedream |
+| T2I — primary | **gpt-image-2** (OpenAI) |
+| T2I — fallback | Nano Banana Pro · Doubao Seedream |
 | Video — primary | **Seedance 2.0** via Volcengine Ark |
 | Video — manual fallback | Jimeng Web UI packages |
 | Storage | plain filesystem (`bible/<characters\|locations\|stories>/...`) |

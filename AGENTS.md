@@ -21,7 +21,7 @@ Four layers, each gated by explicit `approve`:
                                                      ↓ approve
                                                [ StoryboardAgent + MIMO ] →  storyboard.json  (Layer 2)
                                                      ↓ approve
-                                               [ SceneArtAgent + Nano Banana ] →  scene_arts/sXX.png + art.json  (Layer 3)
+                                               [ SceneArtAgent + gpt-image-2 ] →  scene_arts/sXX.png + art.json  (Layer 3)
                                                      ↓ approve
                                                [ ShotGenAgent + Seedance (or Jimeng packages) ]
                                                    + [ TTSAgent + BGMAgent ]
@@ -125,8 +125,9 @@ hitchcock storyboard approve   -s <sid> [--scene <id>]
 Storyboard per scene (expands each Script scene):
 - `shots: [{ id, duration_sec, shot_type, camera_movement,
            characters_in_shot, action, dialogue }]`
-- `scene_art_prompt` — a v6-recipe-compliant Nano Banana prompt for Shot 1
-  first-frame art. Auto-authored by MIMO from the scene's shots + VO +
+- `scene_art_prompt` — a v6-recipe-compliant T2I prompt for Shot 1
+  first-frame art (consumed by gpt-image-2 by default; backend is
+  swappable). Auto-authored by MIMO from the scene's shots + VO +
   location. Never hand-edited.
 - `seedance_prompt` — the final schema-format Shot 1/2/3 + VO + BGM text
   that the video model will consume. Auto-assembled.
@@ -137,16 +138,19 @@ scene's shots/prompts while keeping others untouched.
 ### 3.4 Layer 3 — Scene Art
 
 ```
-hitchcock art generate  -s <sid> [--scene <id>] [--candidates 3]
+hitchcock art generate  -s <sid> [--scene <id>] [--candidates N]   # default N=1
 hitchcock art show      -s <sid> [--scene <id>] [--json]    # list candidates w/ paths
 hitchcock art pick      -s <sid>  --scene <id>  --candidate <N>
 hitchcock art refine    -s <sid>  --scene <id>  --feedback "<text>"
 hitchcock art approve   -s <sid>
 ```
 
-`generate` calls Nano Banana with the storyboard's `scene_art_prompt` to
-produce N candidates → `candidates/<scene_id>/cand_NN.png`. Auto-selects
-no pick; user/agent must `pick`.
+`generate` calls the configured T2I backend (default **gpt-image-2** via
+OpenAI; Nano Banana Pro available as fallback) with the storyboard's
+`scene_art_prompt` to produce N candidates →
+`candidates/<scene_id>/cand_NN.png`. Default `N=1`; pass `--candidates 2-3`
+when a shot needs variety. When `N=1`, `pick` is auto-selected; when `N>1`
+the user/agent must `pick` explicitly.
 
 `refine --scene <id> --feedback "<text>"` does the important thing:
 MIMO reads the current `scene_art_prompt` + the user's feedback,
@@ -258,7 +262,7 @@ Key codes:
 - `NO_PENDING` — tried to refine/approve with no pending artifact
 - `UNKNOWN_SCENE` — `--scene <id>` doesn't match
 - `MIMO_PARSE_FAIL` — LLM returned malformed JSON (retry safe)
-- `IMAGE_GEN_FAIL` — Nano Banana API error (check key / quota)
+- `IMAGE_GEN_FAIL` — T2I backend error (check key / quota; default backend gpt-image-2)
 - `OVER_BUDGET` — generated cost exceeds soft cap; pass `--allow-cost <N>` to override
 
 ---
