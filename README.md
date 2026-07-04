@@ -36,7 +36,7 @@ Hitchcock is a **fully CLI-based, agent-friendly** multi-stage pipeline that dra
 
 You bring a block of text — a book chapter, a screenplay fragment, a scene description. Hitchcock turns it into:
 
-> **A finished animated short — runtime is yours to set**, from a 60-second teaser to a multi-minute episode (no hard upper bound). Stylistically consistent, scene-by-scene faithful to the source, with diegetic voice lines and zero hand-editing of intermediate artifacts.
+> **A finished animated film**, from a 60-second teaser to a multi-minute episode (no hard upper bound). Stylistically consistent, scene-by-scene faithful to the source, with diegetic voice lines and zero hand-editing of intermediate artifacts.
 
 Every stage is **gate-based**: `generate` → `show` → `refine --feedback "..."` → `approve`. Python code holds meta-prompts, schemas, and plumbing only. Every story-specific artifact — scene titles, camera choices, dialogue, scene-art prompts, Seedance prompts — is MIMO-authored and editable only through natural-language feedback.
 
@@ -139,28 +139,3 @@ Full CLI contract, data model on disk, error codes, and known-issues log: see **
 
 ---
 
-## 📁 Repo layout
-
-```
-src/hitchcock/
-├── cli.py                # CLI entry point — `hitchcock ...`
-├── config.py             # settings / env loader
-├── agents/               # one file per pipeline stage
-│   ├── brief.py  style.py  cast.py
-│   ├── script.py  storyboard.py
-│   ├── scene_art.py  shot_gen.py
-│   └── design.py  location.py  post.py  tts.py
-├── bible/                # story-bible store + Pydantic schemas
-├── llm/                  # MiMo + Gemini clients
-├── image/                # Nano Banana · gpt-image-2 · Ark Seedream clients
-└── video/                # Seedance 2.0 client
-scripts/
-└── runway_seedance_runner.py   # one-shot A/B runner via Runway's Seedance 2 endpoint
-```
-
----
-
-## 🙏 Acknowledgments
-
-- **Arcane** by Fortiche Studio — primary style reference
-- Teams behind **MiMo**, **Gemini**, **Seedance**, **Nano Banana Pro**, and **Jimeng**
